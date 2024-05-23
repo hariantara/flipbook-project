@@ -31,3 +31,56 @@ body {
     text-wrap: balance;
   }
 }
+
+.pages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+  height: 95vh;
+  width: 100vw;
+}
+
+.page {
+  
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  touch-action: none;
+}
+
+/*
+Normal Zoom
+*/
+@keyframes zoomIn {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes zoomOut {
+  from {
+    transform: scale(1.2);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.zoom-in {
+  animation: zoomIn 1s forwards;
+}
+
+.zoom-out {
+  animation: zoomOut 1s forwards;
+}
+
+.button-container {
+  display: flex;
+  height: 5vh;
+  justify-content: space-around;
+  align-items: center;
+}

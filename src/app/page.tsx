@@ -1,113 +1,129 @@
+'use client'
+import { FlippingPages } from "flipping-pages";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import 'flipping-pages/dist/style.css';
 
-export default function Home() {
+// gif assets
+import page1Gif from './gifs/indonesia-kaya-budaya.gif';
+import page2Gif from './gifs/tujuan-pembelajaran.gif';
+import page3Gif from './gifs/peta-konsep.gif';
+import page4Gif from './gifs/keunikan-kebiasaan-masyarakat-disekitarku.gif';
+import page5Gif from './gifs/nasi-tumpeng.gif';
+import page6Gif from './gifs/tri-hita-karana.gif';
+import page7Gif from './gifs/hubungan-manusia-dengan-tuhan.gif';
+import page8Gif from './gifs/hubungan-manusia-dengan-manusia.gif';
+import page9Gif from './gifs/hubungan-manusia-dengan-alam.gif';
+import page10Gif from './gifs/gotong-royong.gif';
+import page11Gif from './gifs/kekayaan-budaya-indonesia.gif';
+import page12Gif from './gifs/peta-indonesia.gif';
+import page13Gif from './gifs/anak-anak.gif';
+import page14Gif from './gifs/banyak-filosofi.gif';
+import page15Gif from './gifs/manfaat-keberagaman.gif';
+import page16Gif from './gifs/test-pemahaman.gif';
+
+export default function Home(): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+  const [zoomClass, setZoomClass] = useState<string>('');
+
+  const back = () => {
+    setSelected(selected => Math.max(selected - 1, 0));
+  };
+
+  const next = () => {
+    setSelected(selected => Math.min(selected + 1, 15));
+  };
+
+  /**
+   * These code to set zoom base on Zoom In/Out button on bottom bar
+   */
+  useEffect(() => {
+    let zoomOutTimeout: NodeJS.Timeout;
+
+    if (zoomClass === 'zoom-in') {
+      zoomOutTimeout = setTimeout(() => {
+        setZoomClass('zoom-out');
+      }, 3000); // 3 seconds for zoom in
+    }
+
+    return () => {
+      clearTimeout(zoomOutTimeout);
+    };
+  }, [zoomClass]);
+
+  const handleZoomToggle = () => {
+    console.log('Zoom toggled', zoomClass);
+    if (zoomClass !== 'zoom-in') {
+      setZoomClass('zoom-in');
+    } else {
+      setZoomClass('zoom-out');
+    }
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <div>
+      <div className="pages">
+        <FlippingPages
+          animationDuration={350}
+          direction="right-to-left"
+          onSwipeEnd={setSelected}
+          selected={selected}
+        >
+          <div className={`page ${zoomClass}`}>
+            <Image src={page1Gif} alt="page1" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page2Gif} alt="page2" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page3Gif} alt="page3" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page4Gif} alt="page4" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page5Gif} alt="page5" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page6Gif} alt="page6" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page7Gif} alt="page7" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page8Gif} alt="page8" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page9Gif} alt="page9" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page10Gif} alt="page10" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page11Gif} alt="page11" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page12Gif} alt="page12" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page13Gif} alt="page13" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page14Gif} alt="page14" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page15Gif} alt="page15" layout="fill" unoptimized/>
+          </div>
+          <div className={`page ${zoomClass}`}>
+            <Image src={page16Gif} alt="page16" layout="fill" unoptimized/>
+          </div>
+        </FlippingPages>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className='button-container'>
+        <button onClick={back}>Back</button>
+        <button onClick={next}>Next</button>
+        <button onClick={handleZoomToggle}>Zoom In/Out</button>
       </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
