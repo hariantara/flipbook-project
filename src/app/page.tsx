@@ -1,7 +1,7 @@
 'use client'
-import React, {useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Image, { StaticImageData } from "next/image";
-import 'flipping-pages/dist/style.css';
+// import 'flipping-pages/dist/style.css';
 
 // gif assets
 import cover1 from './assets/cover1.gif';
@@ -123,6 +123,8 @@ export default function Home(): JSX.Element {
     }
   ]);
 
+  
+
   const handlePageClick = (url: string | URL | null) => {
     if (url) {
       window.open(url, '_blank')?.focus();
@@ -130,26 +132,28 @@ export default function Home(): JSX.Element {
   };
 
   return (
-    <>
-      <div className="pages">
-        <HTMLFlipBook
-          ref={flipBookRef}
-          width={width / 2.2}
-          height={height / 1.5}
-          maxShadowOpacity={0.5}
-          showCover={false}
-          mobileScrollSupport={true}
-          startPage={0}
-        >
-          {
-            data.map((value: IDataList, index: number) => (
-              <div key={index} className={`page`} onDoubleClick={() => handlePageClick(value.url)}>
-                <Image src={value.path} alt={`image-${index}`} priority={true} layout="fill" />
-              </div>
-            ))
-          }
-        </HTMLFlipBook>
-      </div>
-    </>
+    <div className="pages">
+      <HTMLFlipBook
+        ref={flipBookRef}
+        minHeight={height}
+        minWidth={width}
+        width={width}
+        height={height}
+        maxHeight={height}
+        maxWidth={width}
+        maxShadowOpacity={0.5}
+        showCover={false}
+        mobileScrollSupport={false}
+        startPage={0}
+      >
+        {
+          data.map((value: IDataList, index: number) => (
+            <div key={index} className={`page`} onDoubleClick={() => handlePageClick(value.url)}>
+              <Image src={value.path} priority alt={`image-${index}`} layout='fill' />
+            </div>
+          ))
+        }
+      </HTMLFlipBook>
+    </div>
   );
 }
