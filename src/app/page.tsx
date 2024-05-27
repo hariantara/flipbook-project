@@ -1,129 +1,153 @@
 'use client'
-import { FlippingPages } from "flipping-pages";
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import React, {useRef, useState } from "react";
+import Image, { StaticImageData } from "next/image";
 import 'flipping-pages/dist/style.css';
 
 // gif assets
-import page1Gif from './gifs/indonesia-kaya-budaya.gif';
-import page2Gif from './gifs/tujuan-pembelajaran.gif';
-import page3Gif from './gifs/peta-konsep.gif';
-import page4Gif from './gifs/keunikan-kebiasaan-masyarakat-disekitarku.gif';
-import page5Gif from './gifs/nasi-tumpeng.gif';
-import page6Gif from './gifs/tri-hita-karana.gif';
-import page7Gif from './gifs/hubungan-manusia-dengan-tuhan.gif';
-import page8Gif from './gifs/hubungan-manusia-dengan-manusia.gif';
-import page9Gif from './gifs/hubungan-manusia-dengan-alam.gif';
-import page10Gif from './gifs/gotong-royong.gif';
-import page11Gif from './gifs/kekayaan-budaya-indonesia.gif';
-import page12Gif from './gifs/peta-indonesia.gif';
-import page13Gif from './gifs/anak-anak.gif';
-import page14Gif from './gifs/banyak-filosofi.gif';
-import page15Gif from './gifs/manfaat-keberagaman.gif';
-import page16Gif from './gifs/test-pemahaman.gif';
+import cover1 from './assets/cover1.gif';
+import cover2 from './assets/cover2.png';
+import cover3 from './assets/cover3.png';
+import cover4 from './assets/cover4.gif';
+import cover5 from './assets/cover5.gif';
+import cover6 from './assets/cover6.gif';
+import cover7 from './assets/cover7.gif';
+import cover8 from './assets/cover8.gif';
+import cover9 from './assets/cover9.gif';
+import cover10 from './assets/cover10.gif';
+import cover11 from './assets/cover11.gif';
+import cover12 from './assets/cover12.gif';
+import cover13 from './assets/cover13.gif';
+import cover14 from './assets/cover14.gif';
+import cover15 from './assets/cover15.png';
+import cover16 from './assets/cover16.png';
+import cover17 from './assets/cover17.png';
+import cover18 from './assets/thankyou.jpg';
+
+import dynamic from "next/dynamic"
+import type { IEventProps, IFlipSetting } from "react-pageflip/build/html-flip-book/settings"
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+
+interface HTMLFilpPageOverride extends Partial<IFlipSetting & IEventProps> {
+  className?: string
+  style?: React.CSSProperties
+  children: React.ReactNode
+  renderOnlyPageLengthChange?: boolean
+  ref?: any
+}
+
+const HTMLFlipBook = dynamic(() => import("react-pageflip"), {
+  ssr: false
+}) as React.ComponentType<HTMLFilpPageOverride>
+
+interface IDataList {
+  path: string | StaticImport | StaticImageData;
+  url: string | URL | null
+}
 
 export default function Home(): JSX.Element {
-  const [selected, setSelected] = useState<number>(0);
-  const [zoomClass, setZoomClass] = useState<string>('');
-
-  const back = () => {
-    setSelected(selected => Math.max(selected - 1, 0));
-  };
-
-  const next = () => {
-    setSelected(selected => Math.min(selected + 1, 15));
-  };
-
-  /**
-   * These code to set zoom base on Zoom In/Out button on bottom bar
-   */
-  useEffect(() => {
-    let zoomOutTimeout: NodeJS.Timeout;
-
-    if (zoomClass === 'zoom-in') {
-      zoomOutTimeout = setTimeout(() => {
-        setZoomClass('zoom-out');
-      }, 3000); // 3 seconds for zoom in
+  const flipBookRef = useRef<any>();
+  const [data, setData] = useState<IDataList[]>([
+    {
+      path: cover1,
+      url: null,
+    },
+    {
+      path: cover2,
+      url: null,
+    },
+    {
+      path: cover3,
+      url: null,
+    },
+    {
+      path: cover4,
+      url: null,
+    },
+    {
+      path: cover5,
+      url: null,
+    },
+    {
+      path: cover6,
+      url: null,
+    },
+    {
+      path: cover7,
+      url: null,
+    },
+    {
+      path: cover8,
+      url: null,
+    },
+    {
+      path: cover9,
+      url: null,
+    },
+    {
+      path: cover10,
+      url: null,
+    },
+    {
+      path: cover11,
+      url: null,
+    },
+    {
+      path: cover12,
+      url: null,
+    },
+    {
+      path: cover13,
+      url: null,
+    },
+    {
+      path: cover14,
+      url: null,
+    },
+    {
+      path: cover15,
+      url: "https://forms.gle/naW2w2BPHdUuXbN88",
+    },
+    {
+      path: cover16,
+      url: null,
+    },
+    {
+      path: cover17,
+      url: null,
+    },
+    {
+      path: cover18,
+      url: null,
     }
+  ]);
 
-    return () => {
-      clearTimeout(zoomOutTimeout);
-    };
-  }, [zoomClass]);
-
-  const handleZoomToggle = () => {
-    console.log('Zoom toggled', zoomClass);
-    if (zoomClass !== 'zoom-in') {
-      setZoomClass('zoom-in');
-    } else {
-      setZoomClass('zoom-out');
+  const handlePageClick = (url: string | URL | null) => {
+    if (url) {
+      window.open(url, '_blank')?.focus();
     }
   };
 
   return (
-    <div>
+    <>
       <div className="pages">
-        <FlippingPages
-          animationDuration={350}
-          direction="right-to-left"
-          onSwipeEnd={setSelected}
-          selected={selected}
+        <HTMLFlipBook
+          ref={flipBookRef}
+          width={window.innerWidth / 2.2}
+          height={window.innerHeight / 1.5}
+          maxShadowOpacity={0.5}
+          showCover={false}
+          mobileScrollSupport={true}
+          startPage={0}
         >
-          <div className={`page ${zoomClass}`}>
-            <Image src={page1Gif} alt="page1" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page2Gif} alt="page2" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page3Gif} alt="page3" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page4Gif} alt="page4" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page5Gif} alt="page5" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page6Gif} alt="page6" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page7Gif} alt="page7" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page8Gif} alt="page8" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page9Gif} alt="page9" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page10Gif} alt="page10" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page11Gif} alt="page11" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page12Gif} alt="page12" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page13Gif} alt="page13" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page14Gif} alt="page14" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page15Gif} alt="page15" layout="fill" unoptimized/>
-          </div>
-          <div className={`page ${zoomClass}`}>
-            <Image src={page16Gif} alt="page16" layout="fill" unoptimized/>
-          </div>
-        </FlippingPages>
+          {
+            data.map((value: IDataList, index: number) => (
+              <div key={index} className={`page`} onDoubleClick={() => handlePageClick(value.url)}>
+                <Image src={value.path} alt={`image-${index}`} layout="fill" unoptimized />
+              </div>
+            ))
+          }
+        </HTMLFlipBook>
       </div>
-      <div className='button-container'>
-        <button onClick={back}>Back</button>
-        <button onClick={next}>Next</button>
-        <button onClick={handleZoomToggle}>Zoom In/Out</button>
-      </div>
-    </div>
+    </>
   );
 }
