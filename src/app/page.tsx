@@ -26,6 +26,7 @@ import cover18 from './assets/thankyou.jpg';
 import dynamic from "next/dynamic"
 import type { IEventProps, IFlipSetting } from "react-pageflip/build/html-flip-book/settings"
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import useDeviceSize from "./utils/useDeviceSize";
 
 interface HTMLFilpPageOverride extends Partial<IFlipSetting & IEventProps> {
   className?: string
@@ -46,6 +47,7 @@ interface IDataList {
 
 export default function Home(): JSX.Element {
   const flipBookRef = useRef<any>();
+  const [width, height] = useDeviceSize();
   const [data, setData] = useState<IDataList[]>([
     {
       path: cover1,
@@ -132,8 +134,8 @@ export default function Home(): JSX.Element {
       <div className="pages">
         <HTMLFlipBook
           ref={flipBookRef}
-          width={window.innerWidth / 2.2}
-          height={window.innerHeight / 1.5}
+          width={width / 2.2}
+          height={height / 1.5}
           maxShadowOpacity={0.5}
           showCover={false}
           mobileScrollSupport={true}
