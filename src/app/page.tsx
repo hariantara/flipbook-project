@@ -144,7 +144,7 @@ export default function Home(): JSX.Element {
           {
             data.map((value: IDataList, index: number) => (
               <div key={index} className={`page`} onDoubleClick={() => handlePageClick(value.url)}>
-                <Image src={value.path} alt={`image-${index}`} layout="fill" unoptimized />
+                <Image src={value.path} alt={`image-${index}`} layout="fill" />
               </div>
             ))
           }
